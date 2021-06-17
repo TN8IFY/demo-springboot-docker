@@ -3,6 +3,7 @@ package com.example.demo;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class TodoStorage {
 
@@ -36,5 +37,16 @@ public class TodoStorage {
         return todos;
     }
 
+    public void checkdone(String id){
+        todos = new ArrayList<Todo>(todos.stream().map(todo->{
+            if (todo.getId().equals(id)) {
+                todo.setDone(true);
+            }else if (todo.getId() != id){
+                todo.setDone(false);
+            }
+            
+            return todo ;
+        }).collect(Collectors.toList()));
+    }
 
 }

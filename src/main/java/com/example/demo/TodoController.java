@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,5 +26,11 @@ public class TodoController {
         storage.delete(id);
         return storage.findAll();
     }
+    @PostMapping("/checkdone")
+    public List<Todo> checkdone(@RequestBody Todo todo){
+        TodoStorage storage = TodoStorage.getInstance();
+        storage.checkdone(todo.getId());
+        return storage.findAll();
 
+    }
 }
