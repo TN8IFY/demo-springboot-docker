@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class TodoController {
 
@@ -30,13 +31,13 @@ public class TodoController {
         return todoService.findAll();
     }
 
-    @PostMapping("/checkDone/{id}")
+    @PutMapping("/checkDone/{id}")
     public List<Todo> checkDone(@PathVariable("id") String id){
         todoService.checkDone(id);
         return todoService.findAll();
     }
 
-    @PostMapping("/checkUnDone/{id}")
+    @PutMapping("/checkUnDone/{id}")
     public List<Todo> checkUnDone(@PathVariable("id") String id){
         todoService.checkUnDone(id);
         return todoService.findAll();
