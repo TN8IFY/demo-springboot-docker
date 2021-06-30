@@ -1,36 +1,38 @@
-package com.example.demo;
+package com.example.demo.controller;
 
-import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoProperties;
+import com.example.demo.entity.Todo;
+import com.example.demo.service.TodoService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 public class TodoController {
 
+    @Autowired
+    public TodoService todoService;
+
     @GetMapping("/")
-    public List<Todo> findAll() {
-        return TodoStorage.getInstance().findAll();
-    }
+    public List<Todo> findAll(){ return todoService.findAll();}
 
     @PostMapping("/create")
-    public List<Todo> create(@RequestBody Todo todo) {
-        TodoStorage storage = TodoStorage.getInstance();
-        storage.push(todo);
-        return storage.findAll();
+    public List<Todo> create(@RequestBody Todo todo){
+        todoService.save(todo);
+        return todoService.findAll();
     }
 
     @DeleteMapping("/delete/{id}")
-    public List<Todo> delete(@PathVariable("id") String id) {
-        TodoStorage storage = TodoStorage.getInstance();
-        storage.delete(id);
-        return storage.findAll();
+    public List<Todo> deleteById(@PathVariable("id") String id){
+        todoService.deleteById(id);
+        return todoService.findAll();
     }
-    @PostMapping("/checkdone")
-    public List<Todo> checkdone(@RequestBody Todo todo){
-        TodoStorage storage = TodoStorage.getInstance();
-        storage.checkdone(todo.getId());
-        return storage.findAll();
 
+    @PostMapping("/checkdone")
+    public List<Todo> checkDone(@PathVariable("id") String id){
+        todoService.checkDone(id);
+        return todoService.findAll();
     }
+
 }
