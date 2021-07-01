@@ -29,9 +29,14 @@ public class TodoController {
         return todoService.findAll();
     }
 
-    @PostMapping("/checkdone")
+    @PostMapping("/checkdone/{id}")
     public List<Todo> checkDone(@PathVariable("id") String id){
         todoService.checkDone(id);
+        return todoService.findAll();
+    }
+    @PostMapping("/checkUnDone/{id}")
+    public List<Todo> checkUnDone(@PathVariable("id") String id){
+        todoService.checkUnDone(id);
         return todoService.findAll();
     }
 
